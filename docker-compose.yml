@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+
+  filestorage_service:
+    build: ./filestorage_service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./filestorage_service/:/app/
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_URI=postgresql://postgres_user:postgres_passwd@filestorage_db/filestorage_db_dev
+    depends_on:
+      - filestorage_db
+
+  filestorage_db:
+    image: postgres:12.1-alpine
+    volumes:
+      - ./db/postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSSWORD=postgres_passwd
+      - POSTGRES_DB=filestorage_db_dev
+
