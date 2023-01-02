@@ -7,5 +7,6 @@ A (WIP) simple filestorage microservice using FastAPI.
 - [ ] Initial working API
 - [ ] API documentation, and full REST conformance
 - [ ] Hook in a DB migration system (alembic?)
+- [ ] User registration system
 - [ ] Authentication via OAuth and simple auth
 - [ ] API keys, bound to users

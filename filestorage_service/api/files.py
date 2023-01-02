@@ -6,7 +6,7 @@ router = fastapi.APIRouter()
 
 
 @router.get("/add")
-async def upload_file(file: fastapi.UploadFile = fastapi.File(...)):
+async def upload_file(file: fastapi.UploadFile = fastapi.File(...)) -> responses.JSONResponse:
     with open(file.filename, "wb") as f:
         content = await file.read()
         f.write(content)
@@ -14,12 +14,12 @@ async def upload_file(file: fastapi.UploadFile = fastapi.File(...)):
 
 
 @router.get("/get/{filename}")
-async def download_file(filename: str):
+async def download_file(filename: str) -> responses.FileResponse:
     return responses.FileResponse(path=f"{os.getcwd()}\\{filename}")
 
 
 @router.delete("/delete/{}")
-async def delete_file(filename: str):
+async def delete_file(filename: str) -> responses.JSONResponse:
     try:
         os.remove(f"{os.getcwd()}\\{filename}")
     except FileNotFoundError:

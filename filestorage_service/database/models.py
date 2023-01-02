@@ -1,22 +1,12 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    MetaData,
-    String,
-    Table,
-    ForeignKey,
-    create_engine,
-)
-from sqlalchemy.ext import declarative
-import functools
-
 from database import base
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext import declarative
 
 
 class _BaseMixin(object):
     @declarative.declared_attr
-    def __tablename__(cls):
-        return cls.__name__.lower() # type: ignore
+    def __tablename__(cls) -> str:
+        return cls.__name__.lower()  # type: ignore
 
     id = Column(Integer, primary_key=True)
 
