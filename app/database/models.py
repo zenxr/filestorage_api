@@ -1,14 +1,22 @@
+import sqlalchemy
 from database import base
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext import declarative
 
 
-class _BaseMixin(object):
+class _BaseMixin:
+    id: sqlalchemy.Integer
+    __name__: str
+
+    # requires in order to access columns with server defaults
+    # or SQL expression defaults, subsequent to a flush, without
+    # triggering an exipired load
+    __mapper_args__ = {"eager_defaults": True}
+
     @declarative.declared_attr
     def __tablename__(cls) -> str:
-        return cls.__name__.lower()  # type: ignore
-
-    id = Column(Integer, primary_key=True)
+        # Generate __tablename__ automatically
+        return cls.__name__.lower()
 
 
 class Bucket(base.Base, _BaseMixin):
